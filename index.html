@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Household Energy Advisor</title>
+    <meta name="description" content="Analyze patterns, predict next month's bill, and get actionable optimizations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Premium Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader-content">
+            <div class="bolt-circle loader-bolt">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary-neon)"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <h2>EnergyAdvisor <span style="color: var(--primary-neon)">Pro</span></h2>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+            <p>Initializing AI Models...</p>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <header class="glass-header">
+            <div class="logo">
+                <div class="bolt-circle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary-neon)"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <div>
+                   <h1>EnergyAdvisor Pro</h1>
+                   <p>Smart Household Analytics & Predictions</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="tariff-badge">
+                    <span class="badge-label">Current Tariff: </span>
+                    <span class="badge-value">₹8.50 / kWh</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboardGrid">
+            <section class="left-col">
+                <div class="hero-image-wrapper">
+                    <img src="eco_home_hero.png" alt="Smart Home Visualization" class="hero-banner">
+                </div>
+                
+                <div class="glass-card form-container glow-border">
+                    <h2>
+                        <span class="form-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                        </span> Add Appliance
+                    </h2>
+                    <form id="applianceForm">
+                        <div class="input-group">
+                            <label for="appName">Select Appliance Type</label>
+                            <div class="select-wrapper">
+                                <select id="appName" required>
+                                    <option value="" disabled selected>Choose appliance category...</option>
+                                    <option value="Air Conditioner (1.5 Ton)">Air Conditioner (1.5 Ton)</option>
+                                    <option value="Air Conditioner (2 Ton)">Air Conditioner (2 Ton)</option>
+                                    <option value="Electric Geyser">Electric Geyser (Water Heater)</option>
+                                    <option value="Refrigerator (Double Door)">Refrigerator (Double Door)</option>
+                                    <option value="Refrigerator (Single Door)">Refrigerator (Single Door)</option>
+                                    <option value="Washing Machine">Washing Machine</option>
+                                    <option value="Microwave Oven">Microwave Oven</option>
+                                    <option value="Television (LED)">Television (LED)</option>
+                                    <option value="Desktop Computer">Desktop Computer</option>
+                                    <option value="Ceiling Fan">Ceiling Fan</option>
+                                    <option value="LED Tube Light">LED Tube Light</option>
+                                    <option value="Custom">Custom / Other Mode</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group" id="customNameGroup" style="display: none;">
+                            <label for="customAppName">Custom Appliance Name</label>
+                            <input type="text" id="customAppName" placeholder="e.g., Hair Dryer">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group half">
+                                <label for="appWattage">Wattage (W)</label>
+                                <input type="number" id="appWattage" placeholder="e.g., 1500" required min="1">
+                            </div>
+                            <div class="input-group half">
+                                <label for="appHours">Hours / Day</label>
+                                <input type="number" id="appHours" placeholder="e.g., 7" required min="0.1" step="0.1" max="24">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="primary-btn pulse-btn">Add to Dashboard</button>
+                    </form>
+                    
+                    <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.9rem; color: var(--text-muted);">Hackathon Quick Demo:</span>
+                        <label class="demo-toggle">
+                            <input type="checkbox" id="demoToggleCheck" checked>
+                            <span class="toggle-track"></span>
+                            <span class="toggle-text">Load Dummy Data</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="glass-card list-container">
+                    <h2>
+                        <span class="form-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        </span> Your Portfolio
+                    </h2>
+                    <div class="list-headers" id="listHeaders" style="display:none;">
+                        <span>Appliance</span>
+                        <span>Power & Usage</span>
+                    </div>
+                    <div id="emptyState" class="empty-state">
+                        <p>No appliances added yet.<br>Start adding from above.</p>
+                    </div>
+                    <ul id="applianceList" class="app-list">
+                    </ul>
+                </div>
+                
+                <div class="glass-card what-if-container">
+                    <h2>
+                        <span class="form-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        </span> What-If Simulator
+                    </h2>
+                    <p class="subtitle">Test how reducing operational hours impacts your monthly savings.</p>
+                    
+                    <div class="input-group">
+                        <label for="whatIfTarget">Target Appliance</label>
+                        <div class="select-wrapper">
+                            <select id="whatIfTarget">
+                                <option value="" disabled selected>No appliances available</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group range-group">
+                        <label for="whatIfReduce">Reduce usage by <span id="reduceValDisplay" class="highlight-text">1.0</span> hrs/day:</label>
+                        <input type="range" id="whatIfReduce" min="0" max="10" step="0.5" value="1.0">
+                    </div>
+                    
+                    <div id="whatIfResult" class="result-box hidden"></div>
+                </div>
+            </section>
+
+            <section class="right-col">
+                <div class="kpi-grid">
+                    <div class="kpi-card glass-card">
+                        <div class="kpi-icon teal">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>Total Consumption</h3>
+                            <p id="totalUnitsKpi">0 <span class="unit">kWh</span></p>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass-card">
+                        <div class="kpi-icon pink">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>Estimated Monthly Bill</h3>
+                            <p id="totalBillKpi">₹0</p>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass-card highlight-card">
+                        <div class="kpi-icon gold">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>AI Predicted Next Bill</h3>
+                            <p id="predictedBillKpi">₹0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-row">
+                    <!-- Main Trend -->
+                    <div class="glass-card chart-container main-chart">
+                        <h2>Monthly Trend Analysis</h2>
+                        <div class="canvas-wrapper">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Breakdown Pie -->
+                    <div class="glass-card chart-container breakdown-chart">
+                        <h2>Consumption Breakdown</h2>
+                        <div class="canvas-wrapper-pie">
+                            <canvas id="breakdownChart"></canvas>
+                            <p id="pieEmptyState" class="pie-empty">Awaiting data...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Savings Action Graph -->
+                <div class="savings-row">
+                    <div class="glass-card chart-container savings-chart-container">
+                        <h2>Actionable Savings Potential (₹)</h2>
+                        <div class="canvas-wrapper">
+                            <canvas id="savingsBarChart"></canvas>
+                            <p id="barEmptyState" class="pie-empty">Awaiting data...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-row">
+                    <!-- Top Appliances -->
+                    <div class="glass-card scrollable-card">
+                        <h2>
+                            <span class="form-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            </span> Highest Consumers
+                        </h2>
+                        <ul id="topConsumersList" class="top-list">
+                             <p class="empty-list-msg">Waiting for appliances...</p>
+                        </ul>
+                    </div>
+
+                    <!-- Suggestions -->
+                    <div class="glass-card savings-card scrollable-card">
+                        <h2>
+                            <span class="form-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            </span> Dynamic Smart Suggestions
+                        </h2>
+                        <ul id="suggestionsList" class="suggestions-list">
+                             <p class="empty-list-msg">Waiting for appliances...</p>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
