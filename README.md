@@ -70,3 +70,4 @@ This was developed rapidly for a Hackathon. Feel free to open issues or submit P
 
 ## 📜 License
 Distributed under the MIT License. See `LICENSE` for more information.
+Developed By Vartika Soni
